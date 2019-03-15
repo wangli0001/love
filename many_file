@@ -1,0 +1,32 @@
+import os 
+import csv
+import pandas as pd 
+from os import listdir
+path = "/home/lab307/sunhuan/many/"
+for info in os.listdir(path): 
+    row=[]#定义行数组
+    column=[]#定义列数组
+    data_1=[]
+    data_2=[]
+    data_3=[]
+    domain = os.path.abspath('/home/lab307/sunhuan/many/')  #获取文件夹的路径 
+    info = os.path.join(domain,info)
+    file =csv.reader(open('info','r'))
+    with open('mimc_ts.csv', 'w', newline="") as f:
+        for line in file:
+            row.append(line.split(','))#以“，”为分隔符分隔
+        for col in row:
+            data=[col[0],col[8]]
+            if data[1]!='':
+        
+                data_1.append(data[0])
+                data_2.append(data[1])
+        for i in range(len(data_2)):
+            data_3=[data_1[i],data_2[i]]
+            print(data_3)
+            column.extend(data_3)
+            csv.writer(f).writerow((data_3))
+        dataframe = pd.DataFrame({'hour':col[0],'glu':col[8]},index=[0])#取数据
+        dataframe.to_csv("file",index=True,sep=',')
+                 
+                

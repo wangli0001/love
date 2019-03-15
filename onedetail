@@ -1,0 +1,32 @@
+import pandas as pd
+import csv
+file =open('/home/lab307/sunhuan/mimc_ts.csv','r')
+lines=file.readlines()#读取所有行
+file.close()
+row=[]#定义行数组
+column=[]#定义列数组
+data_1=[]
+data_2=[]
+data_3=[]
+with open('exp.csv', 'w', newline="") as f:
+#     print(f)
+    for line in lines:
+        row.append(line.split(','))#以“，”为分隔符分隔
+
+    for col in row:
+        data=[col[0],col[8]]
+#         print(data)
+        if data[1]!='':
+        
+            data_1.append(data[0])
+            #print(data_1)
+            data_2.append(data[1])
+    for i in range(len(data_2)):
+        data_3=[data_1[i],data_2[i]]
+        print(data_3)
+      
+        column.extend(data_3)
+        csv.writer(f).writerow((data_3))
+       
+    dataframe = pd.DataFrame({'hour':col[0],'glu':col[8]},index=[0])#取数据
+    dataframe.to_csv("exp.csv",index=True,sep=',')

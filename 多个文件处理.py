@@ -1,4 +1,5 @@
 import os 
+import re
 import csv
 import pandas as pd 
 import numpy as np
@@ -17,6 +18,16 @@ for info in os.listdir(path):
     data_2=[]
     data=[]
     output=[]
+    portion = os.path.splitext(info)
+    if portion[1] == '.csv':
+         match = re.match('.*(\d).*',portion[0])
+         #print(match)
+         pb = match.group(1)
+         if str(pb) in portion[0]:
+            new = 'visit_' + str(pb)          
+            newname = new + portion[1]
+            print(newname)
+            #os.rename(filename, newname)
   
     with open('info', 'w', newline="") as f:
         for line in lines:
@@ -29,15 +40,8 @@ for info in os.listdir(path):
         for i in range(len(data_2)):
             data_3=[data_1[i],data_2[i]]
 
-            outname = open('info.csv','a', newline='')
+            outname = open(newname,'a', newline='')
             csv_write = csv.writer(outname,dialect='excel')
             csv_write.writerow(data_3)
     
-#             column.extend(data_3)
-#             csv.writer(f).writerow((data_3))
-          
-                
-#     dataframe = pd.DataFrame({'hour':col[0],'glu':col[8]},index=[0])
-# #         outname = info.replace('info','outname')
-# #将DataFrame存储为csv,index表示是否显示行名，default=Tru
-#     dataframe.to_csv('info.csv',index=False,sep=',')
+#           
